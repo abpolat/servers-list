@@ -1,0 +1,73 @@
+{
+  "root": "apps/servers-list",
+  "sourceRoot": "apps/servers-list/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/servers-list",
+        "index": "apps/servers-list/src/index.html",
+        "baseHref": "/",
+        "main": "apps/servers-list/src/main.tsx",
+        "polyfills": "apps/servers-list/src/polyfills.ts",
+        "tsConfig": "apps/servers-list/tsconfig.app.json",
+        "assets": [
+          "apps/servers-list/src/favicon.ico",
+          "apps/servers-list/src/assets"
+        ],
+        "styles": ["apps/servers-list/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/servers-list/src/environments/environment.ts",
+              "with": "apps/servers-list/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "servers-list:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "servers-list:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/servers-list/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/servers-list"],
+      "options": {
+        "jestConfig": "apps/servers-list/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

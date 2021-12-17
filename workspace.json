@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "servers-list": "apps/servers-list",
+    "servers-list-e2e": "apps/servers-list-e2e"
+  }
+}

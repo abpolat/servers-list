@@ -1,0 +1,15 @@
+# syntax=docker/dockerfile:1
+FROM node:14-alpine as build
+WORKDIR /data/app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY ./*.* ./
+COPY ./apps/servers-list ./apps/servers-list
+COPY ./apps/servers-list-e2e/project.json ./apps/servers-list-e2e/project.json
+COPY ./libs ./libs
+RUN npx nx build servers-list
+
+FROM nginx:1.17.10-alpine
+EXPOSE 80
+COPY ./apps/servers-list/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /data/app/dist/apps/servers-list /usr/share/nginx/html
